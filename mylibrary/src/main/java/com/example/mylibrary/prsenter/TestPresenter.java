@@ -1,13 +1,14 @@
 package com.example.mylibrary.prsenter;
 
-import android.database.Observable;
 
 import com.example.mylibrary.base.ResultBase;
 import com.example.mylibrary.view.TestView;
 
-import org.reactivestreams.Subscriber;
-
+import io.reactivex.Observable;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 
@@ -17,7 +18,6 @@ import io.reactivex.schedulers.Schedulers;
 
 public class TestPresenter implements BasePresenter<TestView> {
     private TestView testView;
-    //    private Call<ResultBase> call;
     private Observable<ResultBase> obserable;
 
     @Override
@@ -27,28 +27,29 @@ public class TestPresenter implements BasePresenter<TestView> {
 
 
     public void getData(Observable<ResultBase> obserable) {
+        obserable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResultBase>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
 
-//        call.enqueue(new ResponseCallback<ResultBase>() {
-//            @Override
-//            public void onSuccess(Call call, ResultBase resultBase) {
-//                  testView.getData("");
-//            }
-//
-//            @Override
-//            public void onError(Call call, ResultBase resultBase, int errorCode) {
-//                   testView.getDataErr("");
-//            }
-//
-//            @Override
-//            public void onFail(Call call, String msg) {
-//
-//            }
-//
-//            @Override
-//            public void onResult() {
-//
-//            }
-//        });
+                    }
+
+                    @Override
+                    public void onNext(@NonNull ResultBase resultBase) {
+
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
 //
